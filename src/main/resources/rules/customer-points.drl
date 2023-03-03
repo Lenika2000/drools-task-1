@@ -1,0 +1,32 @@
+import ru.itmo.task1.model.CustomerRequest;
+global CustomerRequest customerRequest;
+
+dialect "mvel"
+
+rule "No points"
+    when
+        CustomerRequest(getPurchasesAmount() < 100)
+    then
+        customerRequest.setPoints(0);
+end
+
+rule "plus 100 points"
+    when
+        CustomerRequest(getPurchasesAmount() >= 100 && getPurchasesAmount() <= 500)
+    then
+        customerRequest.setPoints(100);
+end
+
+rule "plus 500 points"
+    when
+        CustomerRequest(getPurchasesAmount() > 500 && getPurchasesAmount() <= 1000)
+    then
+        customerRequest.setPoints(500);
+end
+
+rule "plus 1000 points"
+    when
+        CustomerRequest(getPurchasesAmount() > 1000)
+    then
+        customerRequest.setPoints(1000);
+end
